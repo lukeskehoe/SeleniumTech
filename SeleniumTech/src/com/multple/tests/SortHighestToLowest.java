@@ -1,4 +1,4 @@
-package newpackage;
+package com.multple.tests;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class NikonSortAndAssert {
+public class SortHighestToLowest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -18,18 +18,16 @@ public class NikonSortAndAssert {
   @Before
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
-    baseUrl = "https://www.katalon.com/";
+    baseUrl = "https://www.amazon.co.uk/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testNikonSortAndAssert() throws Exception {
-    driver.get("https://www.amazon.co.uk/");
-    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("Nikon");
+  public void testSortHighestToLowest() throws Exception {
+    driver.get(baseUrl);
+    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("nikon");
     driver.findElement(By.name("site-search")).submit();
     new Select(driver.findElement(By.id("sort"))).selectByVisibleText("Price: High to Low");
-    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='£3,450.00'])[1]/following::h2[1]")).click();
-    assertEquals("Nikon D3X", driver.findElement(By.id("productTitle")).getText());
   }
 
   @After
@@ -50,6 +48,10 @@ public class NikonSortAndAssert {
     }
   }
 
+  public void waitSeconds(int Seconds) throws InterruptedException {
+	  
+	  TimeUnit.SECONDS.sleep(Seconds);  
+  }
   private boolean isAlertPresent() {
     try {
       driver.switchTo().alert();

@@ -1,4 +1,4 @@
-package newpackage;
+package com.multple.tests;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -9,30 +9,33 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class FirefoxTestcase {
-  private WebDriver driver = new FirefoxDriver();
-  private String baseUrl;
+public class ResultsAndAssert {
+  private WebDriver driver;
+  public String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
+  public String SortValue = "Price: High to Low";
 
   @Before
   public void setUp() throws Exception {
-	  
-//	  System.setProperty("webdriver.firefox.marionette","C:\\geckodriver.exe");
-//		WebDriver driver = new FirefoxDriver();
-   driver = new FirefoxDriver();
-    baseUrl = "https://www.katalon.com/";
+    driver = new FirefoxDriver();
+    baseUrl = "https://www.amazon.co.uk/";
+    
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testUntitledTestCase() throws Exception {
-    driver.get("https://www.amazon.co.uk/");
-    driver.findElement(By.id("twotabsearchtextbox")).click();
-    driver.findElement(By.id("twotabsearchtextbox")).clear();
-    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("nikon");
+  public void testSelect2ndResultsAndAssert() throws Exception {
+    driver.get(baseUrl);
+    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("nikon"); // search  by nikon
     driver.findElement(By.name("site-search")).submit();
-    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Prime'])[7]/following::span[1]")).click();
+   
+	new Select(driver.findElement(By.id("sort"))).selectByVisibleText(SortValue); // sort by price high to low
+    waitSeconds(3);
+    driver.findElement(By.xpath("//li[1]/div/div/div/div[2]/div/div/a/h2")).click();
+  
+    driver.findElement(By.id("//div[31]/div/div/div[2]/p")).getText().contains("Error");
+  
   }
 
   @After
@@ -44,6 +47,10 @@ public class FirefoxTestcase {
     }
   }
 
+  public void waitSeconds(int Seconds) throws InterruptedException {
+	  
+	  TimeUnit.SECONDS.sleep(Seconds);  
+  }
   private boolean isElementPresent(By by) {
     try {
       driver.findElement(by);

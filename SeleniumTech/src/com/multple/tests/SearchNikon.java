@@ -1,4 +1,4 @@
-package newpackage;
+package com.multple.tests;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class AmazonTestKatalonChrome {
+public class SearchNikon {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -17,21 +17,16 @@ public class AmazonTestKatalonChrome {
 
   @Before
   public void setUp() throws Exception {
-    
-	  
-	  driver = new FirefoxDriver();
-    baseUrl = "https://www.katalon.com/";
+    driver = new FirefoxDriver();
+    baseUrl = "https://www.amazon.co.uk/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testAmazonTestKatalon() throws Exception {
-    driver.get("https://www.amazon.co.uk/");
-    driver.findElement(By.id("twotabsearchtextbox")).click();
-    driver.findElement(By.id("twotabsearchtextbox")).clear();
-    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("nike");
+  public void testSearchNikon() throws Exception {
+    driver.get(baseUrl);
+    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("nikon");
     driver.findElement(By.name("site-search")).submit();
-    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Best Seller'])[1]/following::h2[1]")).click();
   }
 
   @After
